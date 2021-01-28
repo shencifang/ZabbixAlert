@@ -1,0 +1,29 @@
+# 密码等敏感信息
+*.user
+
+# 编译输出 - Release 目录下的具体文件
+202012111347/bin/Release/*.exe
+202012111347/bin/Release/*.dll
+202012111347/bin/Release/*.pdb
+202012111347/bin/Release/*.vshost*
+202012111347/bin/Release/*.config
+202012111347/bin/Release/*.xml
+202012111347/bin/Release/Release.rar
+202012111347/bin/Release/zh-Hans/
+
+# Debug 编译输出
+202012111347/bin/Debug/
+202012111347/obj/
+
+# Visual Studio
+.vs/
+*.suo
+*.userosscache
+*.sln.docstates
+
+# 日志
+log/
+
+# 系统文件
+Thumbs.db
+.DS_Store
