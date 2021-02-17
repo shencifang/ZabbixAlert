@@ -8,12 +8,24 @@
 202012111347/bin/Release/*.vshost*
 202012111347/bin/Release/*.config
 202012111347/bin/Release/*.xml
+202012111347/bin/Release/*.XML
+202012111347/bin/Release/*.db
+202012111347/bin/Release/app.manifest
 202012111347/bin/Release/Release.rar
 202012111347/bin/Release/zh-Hans/
+
+# x86/x64 编译输出
+202012111347/bin/x86/
+202012111347/bin/x64/
 
 # Debug 编译输出
 202012111347/bin/Debug/
 202012111347/obj/
+
+# 压缩包
+*.rar
+*.zip
+*.7z
 
 # Visual Studio
 .vs/
@@ -27,3 +39,6 @@ log/
 # 系统文件
 Thumbs.db
 .DS_Store
+
+# 其他
+chfsgui.exe

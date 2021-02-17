@@ -55,26 +55,76 @@
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeMaker.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\CodeMaker.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="CodeMaker.SqlDAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\CodeMaker.SqlDAL.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic">
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
+      <HintPath>bin\Release\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.113.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Net">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq">
       <Private>True</Private>
     </Reference>
@@ -99,24 +149,64 @@
     <Reference Include="System.Xml">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Telerik.WinControls, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />
+    <Reference Include="Telerik.WinControls.ChartView, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.WinControls.GridView, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.WinControls.Themes.Windows8, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.WinControls.UI, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="TelerikCommon, Version=2020.3.1020.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DateTimeUtil.cs" />
+    <Compile Include="db.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="db.Designer.cs">
+      <DependentUpon>db.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="gm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gm.Designer.cs">
+      <DependentUpon>gm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HttpGet.cs" />
+    <Compile Include="HttpPost.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Response.cs" />
+    <Compile Include="sqllite.cs" />
+    <Compile Include="wechat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="wechat.Designer.cs">
+      <DependentUpon>wechat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Zabbix.cs" />
+    <Compile Include="zabbixuser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="zabbixuser.Designer.cs">
+      <DependentUpon>zabbixuser.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="db.resx">
+      <DependentUpon>db.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="gm.resx">
+      <DependentUpon>gm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -127,6 +217,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="wechat.resx">
+      <DependentUpon>wechat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="zabbixuser.resx">
+      <DependentUpon>zabbixuser.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -159,6 +255,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="20191211034249454_easyicon_net_32.ico" />
+    <None Include="Resources\dingding.jpg" />
+    <None Include="Resources\wechat.jpg" />
+    <None Include="Resources\Prometheus.jpg" />
+    <None Include="Resources\zabbix.jpg" />
+    <None Include="Resources\告警.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

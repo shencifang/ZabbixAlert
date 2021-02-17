@@ -12,6 +12,7 @@ namespace _202012111347
 {
     class Zabbix
     {
+        Log log = new Log(AppDomain.CurrentDomain.BaseDirectory + @"/log/Log.txt");
         public Zabbix(string user, string password, string zabbixURL, bool basicAuth)
         {
             this.user = user;
@@ -93,5 +94,6 @@ namespace _202012111347
 
             return jsonResult;
         }
+
     }
 }
