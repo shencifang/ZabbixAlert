@@ -92,19 +92,19 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeMaker.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Maticsoft.DBUtility, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\CodeMaker.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="CodeMaker.SqlDAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\CodeMaker.SqlDAL.dll</HintPath>
+      <HintPath>bin\Release\Maticsoft.DBUtility.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic">
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=5.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -164,6 +164,10 @@
     <Compile Include="db.Designer.cs">
       <DependentUpon>db.cs</DependentUpon>
     </Compile>
+    <Compile Include="DbHelperMySQL.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="EventBLL.cs" />
+    <Compile Include="EventDAL.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +182,9 @@
     </Compile>
     <Compile Include="HttpGet.cs" />
     <Compile Include="HttpPost.cs" />
+    <Compile Include="Info.cs" />
+    <Compile Include="InfoBLL.cs" />
+    <Compile Include="InfoDAL.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

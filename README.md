@@ -4,23 +4,44 @@
 
 ## 功能
 
+### 核心功能
 - 连接 Zabbix 服务器，通过 JSON-RPC 拉取告警数据
-- 定时轮询告警（每 4 分钟），检测到新告警时播放声音
+- 定时轮询告警（每 4 分钟），检测到新告警时播放声音并推送企业微信
 - 自动通过企业微信推送告警消息到指定负责人
 - 支持按主机名映射负责人，告警时通知对应人员
-- SQLite 本地存储告警历史
-- 可视化图表统计
-- Telerik RadPageView 多标签页界面
-- 手动测试取数、测试声音、测试推送
-- 查看和清除告警记录
-- 日志记录到文件
+- 告警事件自动写入 MySQL 数据库存储
 - 窗口默认置顶
+
+### 多标签页界面
+
+| 标签页 | 功能 |
+|--------|------|
+| **总览** | 事件统计（总数/已处理）、小时告警数趋势折线图、事件处理日志、实时日志 |
+| **事件** | 告警事件管理，分为 4 个子页：所有事件（含刷新按钮）、未接收、处理中、已关闭 |
+| **集成** | 事件接入（Zabbix / Prometheus）、告警推送（企业微信 / 钉钉） |
+| **分派** | 主机-负责人映射的**增加/删除/修改/筛选**完整 CRUD 管理（MySQL 存储） |
+| **配置** | 基础运维人员管理、功能测试（测试推送/声音）、其他设置（事件自动关闭/无人认领升级/夜间免打扰） |
+| **报表** | （预留） |
+
+### 定时器机制
+- `timer1` — 每 4 分钟自动轮询 Zabbix 服务器，检测新告警
+- `timer2` — 每 2 小时自动刷新企业微信 access_token
+
+### 页面切换自动加载
+- 切换到「分派」页时自动加载主机-负责人映射列表和负责人下拉选项
+- 切换到「配置」页时自动显示当前默认接收人
+- 切换到「事件」页时自动刷新事件列表
+
+### 数据库分工
+- **SQLite** — 存储主机名与负责人的映射关系（告警时查询负责人）
+- **MySQL** — 存储告警事件（Event 模块）和管理主机-负责人映射（Info 模块的增删改查）
 
 ## 运行要求
 
 - Windows 操作系统
 - .NET Framework 4.6.1 或更高版本
 - 网络连接至 Zabbix 服务器
+- MySQL 数据库（用于事件存储）
 - 企业微信（如需推送功能）
 
 ## 如何运行
@@ -37,11 +58,11 @@ bin\Release\202012111347.exe
 
 ## ⚠️ 运行前必读：修改配置
 
-所有敏感凭据已从源码移除，通过 `App.config` 统一管理。**运行前必须填写真实信息**。
+所有敏感凭据已从源码移除，通过 `App.config` 和 `DbHelperMySQL.cs` 统一管理。**运行前必须填写真实信息**。
 
 ### 修改位置
 
-打开 `202012111347/App.config`，找到 `<appSettings>` 节点：
+#### 1. `202012111347/App.config`
 
 ```xml
 <appSettings>
@@ -54,40 +75,55 @@ bin\Release\202012111347.exe
 </appSettings>
 ```
 
+#### 2. `202012111347/DbHelperMySQL.cs`
+
+```csharp
+public static string connectionString = "server=你的MySQL服务器IP;database=zabbixmonitor;uid=你的数据库用户名;pwd=你的数据库密码;CharSet=utf8;";
+```
+
 ### 配置项说明
 
-| 配置项 | 说明 |
-|--------|------|
-| `corpid` | 企业微信 CorpID |
-| `secret` | 企业微信应用 Secret |
-| `gm` | 默认告警接收人（企业微信账号名） |
-| `user` | Zabbix 登录用户名 |
-| `passw` | Zabbix 登录密码 |
-| `url` | Zabbix 服务器 IP 或域名（不含 http:// 和路径） |
+| 配置项 | 文件 | 说明 |
+|--------|------|------|
+| `corpid` | App.config | 企业微信 CorpID |
+| `secret` | App.config | 企业微信应用 Secret |
+| `gm` | App.config | 默认告警接收人（企业微信账号名） |
+| `user` | App.config | Zabbix 登录用户名 |
+| `passw` | App.config | Zabbix 登录密码 |
+| `url` | App.config | Zabbix 服务器 IP 或域名 |
+| `connectionString` | DbHelperMySQL.cs | MySQL 数据库连接字符串 |
 
-> 也可以在程序界面中通过「Zabbix设置」和「微信设置」按钮修改配置，修改后会自动保存到 App.config。
+> 也可以在程序界面中通过「Zabbix设置」和「微信设置」按钮修改部分配置，修改后会自动保存到 App.config。
 
 ## 项目结构
 
 | 文件 | 说明 |
 |------|------|
-| Form1.cs | 主界面逻辑，含按钮事件和定时器 |
+| Form1.cs | 主界面逻辑，含按钮事件、定时器、页面切换事件 |
+| Form1.Designer.cs | 主界面布局，含所有控件定义（PageView/DataGridView/GroupBox 等） |
 | Zabbix.cs | Zabbix JSON-RPC 客户端封装 |
 | HttpGet.cs / HttpPost.cs | HTTP 请求工具类 |
-| sqllite.cs | SQLite 数据库封装（告警历史、负责人映射） |
+| sqllite.cs | SQLite 数据库封装（按主机名查询负责人） |
+| DbHelperMySQL.cs | MySQL 数据库操作封装（增删改查、事务、分页） |
+| Event.cs | 告警事件实体（id/time/ip/content/gm/recetime/close/closetime） |
+| EventBLL.cs | 告警事件业务逻辑层 |
+| EventDAL.cs | 告警事件数据访问层（MySQL） |
+| Info.cs | 主机-负责人映射实体（hostname/gm） |
+| InfoBLL.cs | 主机-负责人映射业务逻辑层 |
+| InfoDAL.cs | 主机-负责人映射数据访问层（MySQL） |
 | db.cs | 数据库管理窗口 |
 | gm.cs | 负责人管理窗口 |
 | wechat.cs | 企业微信配置窗口 |
 | zabbixuser.cs | Zabbix 连接配置窗口 |
 | Request.cs / Response.cs | 请求/响应模型 |
 | Log.cs | 日志记录 |
-| DateTimeUtil.cs | 时间戳转换工具 |
+| DateTimeUtil.cs | 时间戳与 DateTime 互转工具 |
 | Program.cs | 入口点 |
 | App.config | 应用配置（凭据、连接字符串） |
 | music/ | 告警提示音文件（WAV） |
 
 ## 🔒 安全建议
 
-- 请勿将包含真实凭据的 `App.config` 推送至 Git
+- 请勿将包含真实凭据的 `App.config` 和 `DbHelperMySQL.cs` 推送至 Git
 - 推送到 Git 前确保凭据已替换为占位符
-- 建议定期轮换企业微信 Secret 和 Zabbix 密码
+- 建议定期轮换企业微信 Secret、Zabbix 密码和 MySQL 密码
