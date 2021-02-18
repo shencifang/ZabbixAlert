@@ -213,7 +213,7 @@ namespace _202012111347
                 //显示日志
                 textBox1.Text += info;
                 //发送通知
-                send(gm, info);
+                //send(gm, info);
                 //存储事件
                 eventModule.id = "4";
                 eventModule.time = DateTimeUtil.TimeStampToDateTime(long.Parse(data.lastchange));

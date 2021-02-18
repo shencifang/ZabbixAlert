@@ -38,6 +38,7 @@ namespace _202012111347
             userAuth.password = password;
             Response zbxResponse = objectResponse("user.login", userAuth);
             auth = zbxResponse.result;
+            log.log(auth);
             if (!String.IsNullOrEmpty(auth)) loggedOn = true;
         }
 
@@ -45,6 +46,7 @@ namespace _202012111347
         {
             Response zbxResponse = objectResponse("user.logout", new string[] { });
             var result = zbxResponse.result;
+            log.log(result);
             return result;
         }
 
@@ -52,6 +54,7 @@ namespace _202012111347
         {
             Request zbxRequest = new Request("2.0", method, 1, auth, parameters);
             string jsonParams = JsonConvert.SerializeObject(zbxRequest);
+            log.log(jsonParams);
             return sendRequest(jsonParams);
         }
 

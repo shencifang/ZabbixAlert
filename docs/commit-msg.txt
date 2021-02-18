@@ -1,0 +1,18 @@
+合入新版本代码：脱敏处理、新增功能模块、更新README
+
+脱敏处理：
+- App.config：恢复所有凭据为占位符（corpid/secret/gm/user/passw/url）
+- DbHelperMySQL.cs：恢复为"你的MySQL服务器IP/用户名/密码"占位符
+- Form1.cs send() 方法：企业微信 agentid 保留（通用值 1000002），手机号恢复为"默认负责人|默认备用负责人手机号"
+- Form1.cs：send(gm, info) 推送功能暂时注释，改为仅写日志
+- Form1.cs：三处 new Zabbix() 已完善为通过 ConfigurationManager.AppSettings 读取（本次代码已是新版本，无需硬编码脱敏）
+
+新增功能模块：
+- Zabbix.cs：添加调试日志（login/logout/objectResponse 均写日志）
+- Form1.Designer.cs：控件重新分组，新增 groupBox13"API调整"区域（含 textBox7/textBox8）
+- 分派页：新增"分派调整"区域（groupBox9/10/11/12），完善 CRUD 布局
+
+README更新：
+- 配置页修正描述，补充"API调整"区域
+- 项目结构表补充缺失的 Designer.cs 配套文件
+- 定时器 timer2 补充精确间隔值 7,210,000ms
