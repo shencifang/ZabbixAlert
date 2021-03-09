@@ -12,6 +12,8 @@ namespace _202012111347
 {
     public partial class EventDAL
     {
+        Log log = new Log(AppDomain.CurrentDomain.BaseDirectory + @"/log/Log.txt");
+
         public EventDAL()
         { }
 
@@ -112,6 +114,7 @@ namespace _202012111347
             {
                 strSql.Append(" where " + strWhere);
             }
+            log.log(strSql.ToString());
             return DbHelperMySQL.Query(strSql.ToString());
         }
 

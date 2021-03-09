@@ -11,16 +11,17 @@ using System.Media;
 using System.Net.NetworkInformation;
 using System.Data.SQLite;
 using System.Configuration;
-
+using System.Web;
 namespace _202012111347
 {
     public partial class Form1 : Form
     {
         Log log = new Log(AppDomain.CurrentDomain.BaseDirectory + @"/log/Log.txt");
+        
         sqllite sqllite = new sqllite();
         private SoundPlayer sp = new SoundPlayer();
         string token = "";
-
+        Zabbix zabbix = new Zabbix(ConfigurationManager.AppSettings["user"], ConfigurationManager.AppSettings["passw"], "http://" + ConfigurationManager.AppSettings["url"] + "/zabbix/api_jsonrpc.php");
         public _202012111347.Info InfoModule = new _202012111347.Info();
         public _202012111347.InfoBLL InfoBLL = new _202012111347.InfoBLL();
 
@@ -30,25 +31,38 @@ namespace _202012111347
         public Form1()
         {
             InitializeComponent();
-            TopMost = true;
+            //TopMost = true;
             log.log("----------------------------------");
             log.log("程序开始");
             access_token();
             fill();
+            //登陆
+            zabbix.login();
         }
         //填充数据
         private void fill()
         {
-            textBox2.Text += "工程师A关闭了交换机X（10.0.0.1）网络连通性检查失败事件\r\n----------------------\r\n";
-            textBox2.Text += "工程师B正在处理设备Y(10.0.0.2)网络连通性检查失败事件\r\n----------------------\r\n";
-            textBox2.Text += "系统Z（10.0.0.3）网络连通性检查失败事件推送至工程师A超过30分钟未接收，推送至备角工程师C\r\n----------------------\r\n";
-            label7.Text = "1";
+            //textBox2.Text += "工程师A关闭了交换机X（10.0.0.1）网络连通性检查失败事件\r\n----------------------\r\n";
+            //textBox2.Text += "工程师B正在处理设备Y(10.0.0.2)网络连通性检查失败事件\r\n----------------------\r\n";
+            //textBox2.Text += "系统Z（10.0.0.3）网络连通性检查失败事件推送至工程师A超过30分钟未接收，推送至备角工程师C\r\n----------------------\r\n";
+            //label7.Text = "1";
             radPageView2.SelectedPage = radPageViewPage6;
-
+            textBox2.Text = "";
             this.dataGridView1.Rows.Clear();
-            List<_202012111347.Event> eventlist = eventBLL.GetModelList("");
-            foreach (_202012111347.Event item in eventlist)
+            List<_202012111347.Event> todayeventlist = eventBLL.GetModelList("time>'" + System.DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd") + "'");
+            foreach (_202012111347.Event item in todayeventlist)
             {
+                if (item.close == 0)
+                {
+                    textBox2.Text += "工程师" + item.gm + "正在处理" + item.ip + item.content + "事件\r\n-------------\r\n";
+                }
+                else
+                {
+                    textBox2.Text += "工程师" + item.gm + "已关闭" + item.ip + item.content + "事件\r\n-------------\r\n";
+                }
+                textBox2.SelectionStart = textBox2.Text.Length;
+                textBox2.ScrollToCaret();
+
                 DataGridViewRow row = new DataGridViewRow();
 
                 DataGridViewTextBoxCell cell = new DataGridViewTextBoxCell();
@@ -78,7 +92,9 @@ namespace _202012111347
 
                 this.dataGridView1.Rows.Add(row);
             }
-            this.label6.Text = eventlist.Count.ToString();
+            this.label6.Text = todayeventlist.Count.ToString();
+            List<_202012111347.Event> todayokeventlist = eventBLL.GetModelList("close=1 and time>'" + System.DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd") + "'");
+            label7.Text = todayokeventlist.Count.ToString();
         }
 
         private void access_token()
@@ -177,13 +193,12 @@ namespace _202012111347
         {
             string gm = "";
             string host = "";
-            //登陆
-            Zabbix zabbix = new Zabbix(ConfigurationManager.AppSettings["user"], ConfigurationManager.AppSettings["passw"], "http://" + ConfigurationManager.AppSettings["url"] + "/zabbix/api_jsonrpc.php");
-            zabbix.login();
+            
             log.log("取数" + DateTime.Now.AddSeconds(-630).ToString() + "至" + DateTime.Now.ToString());
             textBox1.Text += "-------------------" + "\r\n";
             textBox1.Text += "取数" + DateTime.Now.AddSeconds(-630).ToString() + "至" + DateTime.Now.ToString() + "\r\n";
             //取数
+            
             long lastChangeSinceTime = DateTimeUtil.DateTimeToTimeStamp(DateTime.Now.AddSeconds(-630));
             Response responseObj = zabbix.objectResponse("trigger.get", new
             {
@@ -200,34 +215,47 @@ namespace _202012111347
                 lastChangeSince = lastChangeSinceTime,
                 filter = new { value = 1 }
             });
-            zabbix.logout();
+            //zabbix.logout();
             foreach (dynamic data in responseObj.result)
             {
-                string info = "";
-                gm = sqllite.select(data.hostname);
-                info = "告警设备：" + data.hostname + "\r\n" + "告警描述：" + data.description + "\r\n" + "告警时间：" + DateTimeUtil.TimeStampToDateTime(long.Parse(data.lastchange)) + "\r\n" + "负责人：" + gm + "\r\n";
-                //声音告警
-                sp.SoundLocation = "music\\15758094501719.wav";
-                sp.Load();
-                sp.Play();
-                //显示日志
-                textBox1.Text += info;
-                //发送通知
-                //send(gm, info);
-                //存储事件
-                eventModule.id = "4";
-                eventModule.time = DateTimeUtil.TimeStampToDateTime(long.Parse(data.lastchange));
-                eventModule.ip = data.hostname;
-                eventModule.content = data.description;
-                eventModule.gm = gm;
-                eventModule.recetime = null;
-                eventModule.close = Convert.ToDecimal(false);
-                eventModule.closetime = null;
-                bool isAdd = eventBLL.Add(eventModule);
-                if (isAdd)
-                   log.log("增加数据成功");
-                //记录
-                log.log(info);
+                List<_202012111347.Event> eventlist = eventBLL.GetModelList("id='" + data.triggerid + "'and close=0");
+                log.log(eventlist.Count.ToString());
+                if (eventlist.Count == 0)
+                {
+                    string info = "";
+                    gm = sqllite.select(data.hostname);
+                    info = "触发器编号" + data.triggerid + "\r\n" + "告警设备：" + data.hostname + "\r\n" + "告警描述：" + data.description + "\r\n" + "告警时间：" + DateTimeUtil.TimeStampToDateTime(long.Parse(data.lastchange)) + "\r\n" + "负责人：" + gm + "\r\n" + "<a href=\\\"http://你的关闭事件API地址/api.php?pass=11&id=" + data.triggerid + "&gm=" + gm + "&ip=" + data.hostname + "&content=" + System.Web.HttpUtility.UrlEncode(data.description) + "\\\">》》》点击关闭事件《《《</a>" + "\r\n" +"事件30分钟自动关闭"+ "\r\n";
+                    //显示日志
+                    textBox1.Text += info;
+                    //发送通知
+                    send(gm, info);
+                    //存储事件
+                    eventModule.id = data.triggerid;
+                    eventModule.time = DateTimeUtil.TimeStampToDateTime(long.Parse(data.lastchange));
+                    eventModule.ip = data.hostname;
+                    eventModule.content = data.description;
+                    eventModule.gm = gm;
+                    eventModule.recetime = null;
+                    eventModule.close = Convert.ToDecimal(false);
+                    eventModule.closetime = null;
+                    bool isAdd = eventBLL.Add(eventModule);
+                    if (isAdd)
+                        log.log("增加数据成功");
+                    //记录
+                    log.log(info);
+                    fill();
+                    //声音告警
+                    sp.SoundLocation = "music\\15758094501719.wav";
+                    sp.Load();
+                    sp.Play();
+                }
+                else {
+                    string info = "忽略未恢复告警" + data.hostname + data.description;
+                    //记录
+                    log.log(info);
+                    //显示日志
+                    textBox1.Text += info;
+                };
             }
             if (host == "")
             {
@@ -283,7 +311,8 @@ namespace _202012111347
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            send("默认负责人","测试");
+            
+            send("默认负责人", "测试" + "<a href=\\\"http://你的关闭事件API地址/api.php?pass=11&id=6792&gm=11&ip=1.1.1.1&content=" + System.Web.HttpUtility.UrlEncode("俺从不") + "\\\">》》》点击接收事件《《《</a>");
         }
 
         private void timer2_Tick(object sender, EventArgs e)

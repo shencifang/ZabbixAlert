@@ -29,15 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint7 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 4D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint8 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 9D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 3D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 5D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(4D, 6D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(5D, 15D);
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(1D, 9D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(2D, 3D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint13 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(3D, 5D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint14 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(4D, 6D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint15 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(5D, 15D);
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button3 = new System.Windows.Forms.Button();
@@ -122,6 +121,9 @@
             this.data2gm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data2area = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.radPageViewPage10 = new Telerik.WinControls.UI.RadPageViewPage();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -137,9 +139,6 @@
             this.button9 = new System.Windows.Forms.Button();
             this.radPageViewPage5 = new Telerik.WinControls.UI.RadPageViewPage();
             this.windows8Theme1 = new Telerik.WinControls.Themes.Windows8Theme();
-            this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
             this.radPageView1.SuspendLayout();
             this.radPageViewPage1.SuspendLayout();
@@ -169,10 +168,10 @@
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.radPageViewPage10.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.groupBox13.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -272,7 +271,7 @@
             this.radPageView1.DefaultPage = this.radPageViewPage1;
             this.radPageView1.Location = new System.Drawing.Point(11, 12);
             this.radPageView1.Name = "radPageView1";
-            this.radPageView1.SelectedPage = this.radPageViewPage10;
+            this.radPageView1.SelectedPage = this.radPageViewPage1;
             this.radPageView1.Size = new System.Drawing.Size(967, 485);
             this.radPageView1.TabIndex = 20;
             this.radPageView1.ThemeName = "Windows8";
@@ -313,10 +312,10 @@
             this.textBox2.Location = new System.Drawing.Point(7, 22);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox2.Size = new System.Drawing.Size(252, 200);
             this.textBox2.TabIndex = 0;
+            this.textBox2.WordWrap = false;
             // 
             // label5
             // 
@@ -330,29 +329,29 @@
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
             this.chart1.Location = new System.Drawing.Point(296, 63);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            series2.Points.Add(dataPoint7);
-            series2.Points.Add(dataPoint8);
-            series2.Points.Add(dataPoint9);
-            series2.Points.Add(dataPoint10);
-            series2.Points.Add(dataPoint11);
-            series2.Points.Add(dataPoint12);
-            this.chart1.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.IsXValueIndexed = true;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            series3.Points.Add(dataPoint11);
+            series3.Points.Add(dataPoint12);
+            series3.Points.Add(dataPoint13);
+            series3.Points.Add(dataPoint14);
+            series3.Points.Add(dataPoint15);
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(390, 373);
             this.chart1.TabIndex = 18;
             this.chart1.Text = "chart1";
-            title2.Alignment = System.Drawing.ContentAlignment.TopCenter;
-            title2.Name = "小时告警数趋势";
-            title2.TextStyle = System.Windows.Forms.DataVisualization.Charting.TextStyle.Frame;
-            this.chart1.Titles.Add(title2);
+            title3.Alignment = System.Drawing.ContentAlignment.TopCenter;
+            title3.Name = "小时告警数趋势";
+            title3.TextStyle = System.Windows.Forms.DataVisualization.Charting.TextStyle.Frame;
+            this.chart1.Titles.Add(title3);
             // 
             // groupBox1
             // 
@@ -373,7 +372,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("黑体", 12.25F);
             this.label7.ForeColor = System.Drawing.Color.Crimson;
-            this.label7.Location = new System.Drawing.Point(181, 55);
+            this.label7.Location = new System.Drawing.Point(173, 55);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(17, 17);
             this.label7.TabIndex = 4;
@@ -384,7 +383,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("黑体", 12.25F);
             this.label6.ForeColor = System.Drawing.Color.Crimson;
-            this.label6.Location = new System.Drawing.Point(181, 17);
+            this.label6.Location = new System.Drawing.Point(173, 17);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(17, 17);
             this.label6.TabIndex = 3;
@@ -393,20 +392,20 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(116, 58);
+            this.label4.Location = new System.Drawing.Point(91, 58);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(111, 13);
+            this.label4.Size = new System.Drawing.Size(137, 13);
             this.label4.TabIndex = 2;
-            this.label4.Text = "处理完毕             个";
+            this.label4.Text = "今日处理事件             个";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(115, 21);
+            this.label3.Location = new System.Drawing.Point(90, 21);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 13);
+            this.label3.Size = new System.Drawing.Size(137, 13);
             this.label3.TabIndex = 1;
-            this.label3.Text = "事件共计             个";
+            this.label3.Text = "今日事件共计             个";
             // 
             // pictureBox1
             // 
@@ -691,6 +690,7 @@
             this.groupBox9.Controls.Add(this.groupBox12);
             this.groupBox9.Controls.Add(this.groupBox11);
             this.groupBox9.Controls.Add(this.groupBox10);
+            this.groupBox9.Enabled = false;
             this.groupBox9.Location = new System.Drawing.Point(411, 129);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(521, 220);
@@ -1033,6 +1033,31 @@
             this.radPageViewPage10.Size = new System.Drawing.Size(957, 451);
             this.radPageViewPage10.Text = "  配 置   ";
             // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.textBox8);
+            this.groupBox13.Controls.Add(this.textBox7);
+            this.groupBox13.Location = new System.Drawing.Point(296, 201);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(200, 121);
+            this.groupBox13.TabIndex = 23;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "API调整";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(71, 44);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(100, 21);
+            this.textBox8.TabIndex = 1;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(71, 21);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(100, 21);
+            this.textBox7.TabIndex = 0;
+            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.checkBox3);
@@ -1176,31 +1201,6 @@
             this.radPageViewPage5.Size = new System.Drawing.Size(957, 451);
             this.radPageViewPage5.Text = "  报 表  ";
             // 
-            // groupBox13
-            // 
-            this.groupBox13.Controls.Add(this.textBox8);
-            this.groupBox13.Controls.Add(this.textBox7);
-            this.groupBox13.Location = new System.Drawing.Point(296, 201);
-            this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(200, 121);
-            this.groupBox13.TabIndex = 23;
-            this.groupBox13.TabStop = false;
-            this.groupBox13.Text = "API调整";
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(71, 21);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 21);
-            this.textBox7.TabIndex = 0;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(71, 44);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 21);
-            this.textBox8.TabIndex = 1;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1210,8 +1210,7 @@
             this.Controls.Add(this.radPageView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
-            this.ShowInTaskbar = false;
-            this.Text = "ZABBIX告警监测（bate0.1）";
+            this.Text = "ZABBIX告警监测（bate0.4） 有时候会卡住不用管它 自己会恢复";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).EndInit();
             this.radPageView1.ResumeLayout(false);
@@ -1249,14 +1248,14 @@
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.radPageViewPage10.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.groupBox13.ResumeLayout(false);
-            this.groupBox13.PerformLayout();
             this.ResumeLayout(false);
 
         }

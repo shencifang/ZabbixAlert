@@ -46,7 +46,6 @@ namespace _202012111347
         {
             Response zbxResponse = objectResponse("user.logout", new string[] { });
             var result = zbxResponse.result;
-            log.log(result);
             return result;
         }
 
@@ -76,6 +75,7 @@ namespace _202012111347
 
         private string sendRequest(string jsonParams)
         {
+            log.log(jsonParams);
             WebRequest request = WebRequest.Create(zabbixURL);
             if (basicAuth != null) request.Headers.Add("Authorization", "Basic " + basicAuth);
             request.ContentType = "application/json-rpc";
@@ -94,7 +94,7 @@ namespace _202012111347
             {
                 jsonResult = streamReader.ReadToEnd();
             }
-
+            log.log(jsonResult);
             return jsonResult;
         }
 
