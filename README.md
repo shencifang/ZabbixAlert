@@ -131,13 +131,15 @@ public static string connectionString = "server=你的MySQL服务器IP;database=
 | App.config | 应用配置（凭据、连接字符串） |
 | music/ | 告警提示音文件（WAV） |
 
-## 变更说明
+## 版本历史
 
-### 2026-05-28 版本更新
+### v0.5（当前版本）
+
+- **版本号更新**：从 beta0.4 → 0.5，窗口标题改为 `ZABBIX告警监测（0.5）`
 - **Zabbix 登录全局化**：`Zabbix` 实例从局部变量提升为类成员变量，程序启动时登录，保持长连接
 - **告警去重**：以 triggerid 为唯一标识，已存在未关闭的告警自动忽略，避免重复通知
 - **恢复企业微信通知**：`send()` 调用从注释状态恢复，新告警自动推送
-- **告警消息含关闭链接**：推送消息包含可点击的关闭事件链接
+- **告警消息含关闭链接**：推送消息包含可点击的关闭事件链接，关闭事件 API 路径从 `/api.php` 调整为 `/`
 - **事件面板动态化**：`fill()` 方法从硬编码样板文字改为读取数据库真实事件数据
 - **增加 `System.Web` 引用**：用于 `HttpUtility.UrlEncode` 编码告警描述
 - **调试日志增强**：`Zabbix.cs` 记录完整请求/响应 JSON；`EventDAL.cs` 记录生成 SQL
@@ -146,6 +148,22 @@ public static string connectionString = "server=你的MySQL服务器IP;database=
 - **图表调整**：折线图移除第一个硬编码数据点，启用 `IsXValueIndexed` 以适应动态数据
 - **界面微调**：`textBox2`（事件日志）滚动方向改为垂直，启用 `WordWrap=false` 避免换行混乱
 - **窗口默认置顶移除**：`TopMost = true` 已注释，窗口启动后不再默认置顶，可由用户通过页面按钮自行控制
+- **多标签页增强**：新增「集成」「分派」「配置」「报表（预留）」标签页，功能分区更清晰
+- **新增事件管理模块**：含 Event.cs（实体）、EventBLL.cs（业务逻辑层）、EventDAL.cs（数据访问层），支持 MySQL 存储告警事件
+- **新增主机-负责人映射管理**：含 Info.cs（实体）、InfoBLL.cs、InfoDAL.cs，支持 MySQL 增删改查操作
+- **新增配置窗口**：zabbixuser.cs（Zabbix连接设置）、wechat.cs（企业微信配置）、gm.cs（负责人管理）、db.cs（数据库管理）
+- **新增 SQLite 支持**：`sqllite.cs` 按主机名查询负责人
+- **新增 HTTP 工具类**：`HttpGet.cs` / `HttpPost.cs`，统一处理网络请求
+- **新增图表资源**：折线图（chart1）展示小时告警数趋势
+- **新增界面图标和资源**：告警、添加等图标及渠道图片（zabbix/Prometheus/微信/钉钉）
+- **项目结构规范化**：完善 `.gitignore`、`docs/commit-msg.txt`、解决方案配置
+- **App.config 统一配置**：企业微信 CorpID/Secret、Zabbix 凭据统一管理
+
+### v0.4（beta）
+
+- 初始版本，基础 Zabbix 告警轮询功能
+- 支持声音告警和企业微信推送
+- 基本的事件查看和关闭功能
 
 ## 🔒 安全建议
 

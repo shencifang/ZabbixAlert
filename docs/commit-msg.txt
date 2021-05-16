@@ -1,1 +1,8 @@
-README全面检查：开篇增加"解决企业内网Zabbix无法发送通知"描述；修正"表单标题置顶"为"窗口默认置顶"表述；脱敏检查全部合格，功能描述与代码一致
+改造：关闭事件 API 路径统一改为 /，窗口标题更新为 v0.5，清理冗余元数据和临时文件
+
+- Form1.cs: 关闭事件 API 路径从 /api.php 改为 /，与部署路径保持一致
+- Form1.Designer.cs: 窗口标题从 "bate0.4" 更新为 "0.5"，移除可能导致用户困惑的旧说明文字
+- Form1.resx: 移除 data2ip/data2gm/data2area 等未使用列的 UserAddedColumn 元数据绑定
+- DbHelperMySQL.cs: 添加注释版连接字符串占位符，便于后续替换
+- README.md: 补充 v0.5 完整功能说明，含版本历史章节
+- docs/commit-msg.txt: 删除临时备注缓存文件

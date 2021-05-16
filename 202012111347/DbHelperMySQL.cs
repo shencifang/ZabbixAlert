@@ -14,6 +14,7 @@ namespace _202012111347
     {
         //数据库连接字符串(web.config来配置)，可以动态更改connectionString支持多数据库.
         //public static string connectionString = PubConstant.ConnectionString;
+        //public static string connectionString = "server=你的数据库服务器IP;database=zabbixmonitor;uid=你的数据库用户名;pwd=你的数据库密码;CharSet=utf8;";
         public static string connectionString = "server=你的MySQL服务器IP;database=zabbixmonitor;uid=你的数据库用户名;pwd=你的数据库密码;CharSet=utf8;";
         public DbHelperMySQL()
         {

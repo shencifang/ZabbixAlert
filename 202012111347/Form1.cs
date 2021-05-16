@@ -224,7 +224,7 @@ namespace _202012111347
                 {
                     string info = "";
                     gm = sqllite.select(data.hostname);
-                    info = "触发器编号" + data.triggerid + "\r\n" + "告警设备：" + data.hostname + "\r\n" + "告警描述：" + data.description + "\r\n" + "告警时间：" + DateTimeUtil.TimeStampToDateTime(long.Parse(data.lastchange)) + "\r\n" + "负责人：" + gm + "\r\n" + "<a href=\\\"http://你的关闭事件API地址/api.php?pass=11&id=" + data.triggerid + "&gm=" + gm + "&ip=" + data.hostname + "&content=" + System.Web.HttpUtility.UrlEncode(data.description) + "\\\">》》》点击关闭事件《《《</a>" + "\r\n" +"事件30分钟自动关闭"+ "\r\n";
+                    info = "触发器编号" + data.triggerid + "\r\n" + "告警设备：" + data.hostname + "\r\n" + "告警描述：" + data.description + "\r\n" + "告警时间：" + DateTimeUtil.TimeStampToDateTime(long.Parse(data.lastchange)) + "\r\n" + "负责人：" + gm + "\r\n" + "<a href=\\\"http://你的关闭事件API地址/?pass=11&id=" + data.triggerid + "&gm=" + gm + "&ip=" + data.hostname + "&content=" + System.Web.HttpUtility.UrlEncode(data.description) + "\\\">》》》点击关闭事件《《《</a>" + "\r\n" + "事件30分钟自动关闭" + "\r\n";
                     //显示日志
                     textBox1.Text += info;
                     //发送通知
